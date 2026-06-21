@@ -7,7 +7,7 @@ const API = axios.create({
   },
 });
 
-// Request Interceptor: Attach JWT to every outgoing request if it exists
+
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -21,11 +21,11 @@ API.interceptors.request.use(
   }
 );
 
-// Response Interceptor: Handle errors globally
+
 API.interceptors.response.use(
   (response) => response,
   (error) => {
-    // If unauthorized (401), automatically clear token and redirect to login
+    
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');

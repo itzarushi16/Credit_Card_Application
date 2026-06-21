@@ -55,7 +55,7 @@ const Login = () => {
           }}>
             Λ
           </div>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 700, letterSpacing: '0.02em', color: '#ffffff' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 700, letterSpacing: '0.02em', color: 'var(--text-primary)' }}>
             Welcome to Apex Bank
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '6px' }}>

@@ -9,7 +9,6 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   
-  // Workstation review dialog state
   const [reviewId, setReviewId] = useState(null);
   const [reviewStatus, setReviewStatus] = useState('APPROVED');
   const [decisionMessage, setDecisionMessage] = useState('');
@@ -111,11 +110,11 @@ const AdminDashboard = () => {
         </div>
       )}
 
-      {/* STATISTICS CARDS ROW */}
+      {/* CARDS ROW */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '20px', marginBottom: '32px' }}>
         <div className="glass" style={{ padding: '20px', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>Total Applications</div>
-          <div style={{ fontSize: '2.25rem', fontFamily: 'var(--font-display)', fontWeight: 700, color: '#ffffff', marginTop: '6px' }}>{totalCount}</div>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 800, textTransform: 'uppercase' }}>Total Applications</div>
+          <div style={{ fontSize: '2.25rem', fontFamily: 'var(--font-display)', fontWeight: 800, color: 'var(--text-primary)', marginTop: '6px' }}>{totalCount}</div>
         </div>
         <div className="glass" style={{ padding: '20px', textAlign: 'center', borderBottom: '3px solid var(--color-success)' }}>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>Approved</div>
@@ -135,7 +134,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* FILTER CONTROL BAR */}
       <div className="glass" style={{ padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px', flexWrap: 'wrap', marginBottom: '24px' }}>
         <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>Filter Queue:</div>
         
@@ -148,9 +146,10 @@ const AdminDashboard = () => {
               style={{
                 padding: '6px 14px',
                 fontSize: '0.8rem',
-                background: filterStatus === status ? 'var(--color-primary)' : 'rgba(255, 255, 255, 0.05)',
-                color: '#ffffff',
-                border: filterStatus === status ? 'none' : '1px solid rgba(255, 255, 255, 0.08)'
+                background: filterStatus === status ? 'var(--color-primary)' : '#F1F5F9',
+                color: 'var(--border-card)',
+                boxShadow: 'none',
+                border: '2px solid var(--border-card)'
               }}
             >
               {status.replace('_', ' ')}
@@ -169,7 +168,7 @@ const AdminDashboard = () => {
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
-                <tr style={{ borderBottom: '2px solid rgba(255, 255, 255, 0.08)', color: 'var(--text-secondary)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <tr style={{ borderBottom: '2.5px solid var(--border-card)', color: 'var(--text-secondary)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   <th style={{ padding: '12px 16px' }}>ID</th>
                   <th style={{ padding: '12px 16px' }}>Applicant Name</th>
                   <th style={{ padding: '12px 16px' }}>CIBIL</th>
@@ -183,7 +182,7 @@ const AdminDashboard = () => {
                 {filteredApps.map((app) => {
                   const dti = Math.round((app.monthlyDebtObligations / app.monthlyIncome) * 100);
                   return (
-                    <tr key={app.id} className="glass-interactive" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)', fontSize: '0.95rem' }}>
+                    <tr key={app.id} className="glass-interactive" style={{ borderBottom: '2px solid #E2E8F0', fontSize: '0.95rem' }}>
                       <td style={{ padding: '16px', fontWeight: 'bold' }}>#{app.id}</td>
                       <td style={{ padding: '16px' }}>
                         <div>{app.fullName}</div>
@@ -241,7 +240,7 @@ const AdminDashboard = () => {
               <div className="form-group">
                 <label className="form-label">Audit Decision</label>
                 <div style={{ display: 'flex', gap: '16px' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#ffffff' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: 'var(--text-primary)', fontWeight: 700 }}>
                     <input
                       type="radio"
                       name="reviewStatus"
@@ -252,7 +251,7 @@ const AdminDashboard = () => {
                     />
                     Approve Credit Card
                   </label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#ffffff' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: 'var(--text-primary)', fontWeight: 700 }}>
                     <input
                       type="radio"
                       name="reviewStatus"
@@ -290,9 +289,9 @@ const AdminDashboard = () => {
                 </button>
                 <button
                   type="submit"
-                  className="btn btn-primary"
+                  className="btn"
                   disabled={actionLoading}
-                  style={{ background: reviewStatus === 'APPROVED' ? 'linear-gradient(135deg, var(--color-success) 0%, #059669 100%)' : 'linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%)', boxShadow: 'none' }}
+                  style={{ background: reviewStatus === 'APPROVED' ? 'var(--color-success-bg)' : 'var(--color-danger-bg)', color: 'var(--border-card)', border: '2.5px solid var(--border-card)' }}
                 >
                   {actionLoading ? 'Recording Note...' : 'Commit Audit Decision'}
                 </button>

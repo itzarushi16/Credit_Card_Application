@@ -12,7 +12,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // If admin, navigate to admin dashboard automatically
+    
     if (isAdmin) {
       navigate('/admin');
       return;
@@ -20,7 +20,7 @@ const Dashboard = () => {
 
     const fetchApplications = async () => {
       try {
-        const response = await API.get('/applications/my');
+        const response = await API.get('/applications/myapplication');
         setApplications(response.data);
       } catch (err) {
         console.error("Error fetching applications:", err);
@@ -94,7 +94,7 @@ const Dashboard = () => {
       {/* Main content grid */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '32px' }}>
         <div className="glass" style={{ padding: '32px' }}>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 600, marginBottom: '24px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '12px' }}>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 600, marginBottom: '24px', borderBottom: '2.5px solid var(--border-card)', paddingBottom: '12px' }}>
             Application History
           </h3>
 
@@ -118,7 +118,7 @@ const Dashboard = () => {
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
                 <thead>
-                  <tr style={{ borderBottom: '2px solid rgba(255, 255, 255, 0.08)', color: 'var(--text-secondary)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <tr style={{ borderBottom: '2.5px solid var(--border-card)', color: 'var(--text-secondary)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     <th style={{ padding: '12px 16px' }}>Application ID</th>
                     <th style={{ padding: '12px 16px' }}>PAN</th>
                     <th style={{ padding: '12px 16px' }}>Income</th>
@@ -130,7 +130,7 @@ const Dashboard = () => {
                 </thead>
                 <tbody>
                   {applications.map((app) => (
-                    <tr key={app.id} className="glass-interactive" style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)', fontSize: '0.95rem', transition: 'background-color 0.2s' }}>
+                    <tr key={app.id} className="glass-interactive" style={{ borderBottom: '2px solid #E2E8F0', fontSize: '0.95rem', transition: 'background-color 0.2s' }}>
                       <td style={{ padding: '16px', fontWeight: 'bold' }}>#{app.id}</td>
                       <td style={{ padding: '16px', fontFamily: 'Courier New', fontWeight: 600 }}>{app.pan}</td>
                       <td style={{ padding: '16px' }}>₹{app.monthlyIncome.toLocaleString('en-IN')}</td>

@@ -14,6 +14,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,6 +56,11 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .status(evaluation.getStatus())
                 .decisionMessage(evaluation.getDecisionMessage())
                 .build();
+
+        // Generate card number if approved automatically
+        if (evaluation.getStatus() == ApplicationStatus.APPROVED) {
+            application.setCardNumber(generateCardNumber());
+        }
 
         CreditCardApplication savedApplication = applicationRepository.save(application);
         return mapToResponse(savedApplication);
@@ -103,8 +109,23 @@ public class ApplicationServiceImpl implements ApplicationService {
             app.setDecisionMessage("Status updated manually by Administrator to: " + status);
         }
 
+        // Generate card number if status changed to APPROVED and not already present
+        if (status == ApplicationStatus.APPROVED && (app.getCardNumber() == null || app.getCardNumber().isEmpty())) {
+            app.setCardNumber(generateCardNumber());
+        }
+
         CreditCardApplication updatedApp = applicationRepository.save(app);
         return mapToResponse(updatedApp);
+    }
+
+    private String generateCardNumber() {
+        Random random = new Random();
+        // Generate a 16 digit card number starting with 4532 (Visa mock)
+        StringBuilder sb = new StringBuilder("4532");
+        for (int i = 0; i < 12; i++) {
+            sb.append(random.nextInt(10));
+        }
+        return sb.toString();
     }
 
     private ApplicationResponse mapToResponse(CreditCardApplication app) {
@@ -128,6 +149,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .salaryProofProvided(app.getSalaryProofProvided())
                 .status(app.getStatus())
                 .decisionMessage(app.getDecisionMessage())
+                .cardNumber(app.getCardNumber())
                 .createdAt(app.getCreatedAt())
                 .updatedAt(app.getUpdatedAt())
                 .build();

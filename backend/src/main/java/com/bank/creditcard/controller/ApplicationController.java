@@ -36,7 +36,7 @@ public class ApplicationController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/my")
+    @GetMapping("/myapplication")
     @Operation(summary = "Get current user's applications", description = "Retrieves a list of all credit card applications submitted by the logged-in user")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved applications")
     @ApiResponse(responseCode = "401", description = "Unauthorized")

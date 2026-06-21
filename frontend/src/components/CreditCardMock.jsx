@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-const CreditCardMock = ({ cardHolder = 'YOUR NAME', status = 'APPROVED', monthlyIncome = 50000 }) => {
+const CreditCardMock = ({ cardHolder = 'YOUR NAME', status = 'APPROVED', monthlyIncome = 50000, cardNumber }) => {
   const [flipped, setFlipped] = useState(false);
 
-  // Generate a mock credit limit (5 times the monthly income, capped at 10L, minimum 1.5L)
   const creditLimit = Math.max(150000, Math.min(1000000, Math.round(monthlyIncome * 5)));
   const formattedLimit = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -11,21 +10,36 @@ const CreditCardMock = ({ cardHolder = 'YOUR NAME', status = 'APPROVED', monthly
     maximumFractionDigits: 0
   }).format(creditLimit);
 
-  // Format cardholder name to uppercase
   const displayName = cardHolder.trim().toUpperCase() || 'VALUED CUSTOMER';
 
-  // Determine card style based on status
-  let cardClass = '';
+  const formatCardNumber = (num) => {
+    if (!num) return '•••• •••• •••• ••••';
+    // Remove non-digits and insert space every 4 digits
+    return num.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ');
+  };
+
+  const displayCardNumber = status === 'APPROVED' 
+    ? formatCardNumber(cardNumber || '4532987654321098') 
+    : '•••• •••• •••• ••••';
+
+  let cardBg = 'linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 100%)'; // Pastel indigo/lavender (Approved)
+  let borderStroke = '#1E293B';
   let tierName = 'PLATINUM';
+  let textColor = '#1E293B';
+  let secondaryTextColor = '#475569';
+
   if (status === 'APPROVED') {
-    cardClass = 'cc-status-approved';
     tierName = creditLimit >= 500000 ? 'APEX ELITE' : 'PLATINUM SELECT';
+    cardBg = 'linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 100%)'; // Soft Pastel Indigo
   } else if (status === 'REJECTED') {
     tierName = 'INACTIVE';
+    cardBg = 'linear-gradient(135deg, #FEE2E2 0%, #FCA5A5 100%)'; // Soft Pastel Coral Red
   } else if (status === 'MANUAL_REVIEW') {
     tierName = 'UNDER REVIEW';
+    cardBg = 'linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%)'; // Soft Pastel Gold/Yellow
   } else {
-    tierName = 'PENDING VALIDATION';
+    tierName = 'PENDING';
+    cardBg = 'linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%)'; // Soft Pastel Baby Blue
   }
 
   const handleCardClick = () => {
@@ -33,82 +47,100 @@ const CreditCardMock = ({ cardHolder = 'YOUR NAME', status = 'APPROVED', monthly
   };
 
   return (
-    <div className="cc-container" onClick={handleCardClick}>
-      <div className={`cc-card ${flipped ? 'flipped' : ''}`}>
+    <div className="cc-container" onClick={handleCardClick} style={{ perspective: '1000px', cursor: 'pointer' }}>
+      <div className={`cc-card ${flipped ? 'flipped' : ''}`} style={{ 
+        width: '100%', 
+        height: '100%', 
+        position: 'relative', 
+        transformStyle: 'preserve-3d', 
+        transition: 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+        borderRadius: '16px'
+      }}>
         
         {/* FRONT FACE */}
-        <div className={`cc-face cc-front ${cardClass} glass`}>
+        <div className="cc-face cc-front" style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          backfaceVisibility: 'hidden',
+          borderRadius: '16px',
+          padding: '24px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          background: cardBg,
+          border: '3px solid #1E293B',
+          boxShadow: '4px 4px 0px #1E293B',
+          color: textColor,
+          overflow: 'hidden'
+        }}>
+          
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', zIndex: 2 }}>
             <div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.1rem', letterSpacing: '0.05em', color: '#ffffff' }}>
-                APEX<span style={{ color: 'var(--color-primary)' }}>CARD</span>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.2rem', letterSpacing: '0.05em', color: '#1E293B' }}>
+                APEX<span style={{ color: '#4F46E5' }}>CARD</span>
               </div>
-              <div style={{ fontSize: '0.55rem', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', marginTop: '2px', fontWeight: 700 }}>
+              <div style={{ fontSize: '0.6rem', letterSpacing: '0.12em', color: secondaryTextColor, marginTop: '2px', fontWeight: 800 }}>
                 {tierName}
               </div>
             </div>
             
-            {/* Wireless symbol and card vendor mock */}
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E293B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12a7 7 0 0 1 14 0" />
                 <path d="M8.5 15.5a3.5 3.5 0 0 1 7 0" />
                 <path d="M12 18h.01" />
               </svg>
-              <div style={{ width: '28px', height: '18px', borderRadius: '4px', background: 'rgba(255,255,255,0.15)', display: 'flex' }} />
+              <div style={{ width: '28px', height: '18px', borderRadius: '4px', border: '2px solid #1E293B', background: '#FFFFFF' }} />
             </div>
           </div>
 
           {/* Chip component */}
           <div style={{ 
-            width: '40px', 
-            height: '32px', 
+            width: '38px', 
+            height: '28px', 
             borderRadius: '6px', 
-            background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', 
-            boxShadow: 'inset 0 1px 3px rgba(255,255,255,0.3)',
+            background: '#FCD34D', 
+            border: '2.5px solid #1E293B',
             position: 'relative',
             zIndex: 2,
-            marginTop: '8px'
+            marginTop: '4px'
           }}>
-            {/* Inner chip circuits pattern */}
-            <div style={{ position: 'absolute', top: '15%', left: '15%', right: '15%', bottom: '15%', border: '1px solid rgba(0,0,0,0.15)', borderRadius: '3px' }} />
-            <div style={{ position: 'absolute', top: '0', left: '50%', width: '1px', height: '100%', background: 'rgba(0,0,0,0.15)' }} />
-            <div style={{ position: 'absolute', left: '0', top: '50%', height: '1px', width: '100%', background: 'rgba(0,0,0,0.15)' }} />
+            <div style={{ position: 'absolute', top: '15%', left: '15%', right: '15%', bottom: '15%', border: '1px solid #1E293B', borderRadius: '2px' }} />
           </div>
 
           {/* Card Number */}
           <div style={{ 
             fontFamily: 'Courier New, Courier, monospace', 
-            fontWeight: 'bold', 
-            fontSize: '1.35rem', 
-            letterSpacing: '3px', 
-            color: '#ffffff',
-            textShadow: '1px 2px 4px rgba(0,0,0,0.8)',
+            fontWeight: 900, 
+            fontSize: '1.4rem', 
+            letterSpacing: '2px', 
+            color: '#1E293B',
             zIndex: 2,
-            marginTop: '12px'
+            marginTop: '8px'
           }}>
-            {status === 'APPROVED' ? '4532 8801 3345 9182' : '•••• •••• •••• ••••'}
+            {displayCardNumber}
           </div>
 
           {/* Holder Name & Expiry */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', zIndex: 2 }}>
-            <div style={{ maxWidth: '70%' }}>
-              <div style={{ fontSize: '0.55rem', color: 'var(--text-secondary)', letterSpacing: '0.05em', fontWeight: 600 }}>CARDHOLDER</div>
-              <div style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div style={{ maxWidth: '65%' }}>
+              <div style={{ fontSize: '0.55rem', color: secondaryTextColor, letterSpacing: '0.05em', fontWeight: 800 }}>CARDHOLDER</div>
+              <div style={{ fontSize: '0.85rem', color: '#1E293B', fontWeight: 800, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {displayName}
               </div>
             </div>
             
             <div style={{ display: 'flex', gap: '16px' }}>
               <div>
-                <div style={{ fontSize: '0.55rem', color: 'var(--text-secondary)', letterSpacing: '0.05em', fontWeight: 600 }}>EXPIRES</div>
-                <div style={{ fontSize: '0.8rem', color: '#ffffff', fontWeight: 700, fontFamily: 'Courier New' }}>06/31</div>
+                <div style={{ fontSize: '0.55rem', color: secondaryTextColor, letterSpacing: '0.05em', fontWeight: 800 }}>EXPIRES</div>
+                <div style={{ fontSize: '0.8rem', color: '#1E293B', fontWeight: 800, fontFamily: 'Courier New' }}>06/31</div>
               </div>
               
               {status === 'APPROVED' && (
                 <div>
-                  <div style={{ fontSize: '0.55rem', color: 'var(--text-secondary)', letterSpacing: '0.05em', fontWeight: 600 }}>LIMIT</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--color-success)', fontWeight: 700 }}>{formattedLimit}</div>
+                  <div style={{ fontSize: '0.55rem', color: secondaryTextColor, letterSpacing: '0.05em', fontWeight: 800 }}>LIMIT</div>
+                  <div style={{ fontSize: '0.8rem', color: '#065F46', fontWeight: 900 }}>{formattedLimit}</div>
                 </div>
               )}
             </div>
@@ -116,36 +148,54 @@ const CreditCardMock = ({ cardHolder = 'YOUR NAME', status = 'APPROVED', monthly
         </div>
 
         {/* BACK FACE */}
-        <div className="cc-face cc-back glass">
+        <div className="cc-face cc-back" style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          backfaceVisibility: 'hidden',
+          borderRadius: '16px',
+          padding: '24px 0',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          background: cardBg,
+          border: '3px solid #1E293B',
+          boxShadow: '4px 4px 0px #1E293B',
+          transform: 'rotateY(180deg)',
+          overflow: 'hidden'
+        }}>
           {/* Black magnetic strip */}
-          <div style={{ width: '100%', height: '38px', background: '#000000', margin: '4px 0 12px 0' }} />
+          <div style={{ width: '100%', height: '36px', background: '#1E293B', margin: '4px 0 10px 0' }} />
           
           {/* Signature panel and CVV */}
           <div style={{ padding: '0 24px', display: 'flex', alignItems: 'center', gap: '16px' }}>
             <div style={{ 
               flex: 1, 
-              height: '32px', 
-              background: 'rgba(255,255,255,0.8)', 
+              height: '30px', 
+              background: '#FFFFFF', 
+              border: '2.5px solid #1E293B',
               borderRadius: '4px',
               fontFamily: 'cursive', 
-              color: '#374151',
+              color: '#1E293B',
               paddingLeft: '12px',
               display: 'flex',
               alignItems: 'center',
-              fontSize: '0.9rem'
+              fontSize: '0.85rem',
+              fontWeight: 'bold'
             }}>
               {displayName.toLowerCase()}
             </div>
             
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: '0.5rem', color: 'var(--text-secondary)', letterSpacing: '0.05em', fontWeight: 600, marginBottom: '2px' }}>CVV</div>
+              <div style={{ fontSize: '0.5rem', color: secondaryTextColor, letterSpacing: '0.05em', fontWeight: 800, marginBottom: '2px' }}>CVV</div>
               <div style={{ 
-                background: '#ffffff', 
-                color: '#111827', 
-                padding: '4px 10px', 
+                background: '#FFFFFF', 
+                color: '#1E293B', 
+                border: '2px solid #1E293B',
+                padding: '3px 8px', 
                 borderRadius: '4px', 
-                fontSize: '0.85rem', 
-                fontWeight: 'bold',
+                fontSize: '0.8rem', 
+                fontWeight: 900,
                 fontFamily: 'Courier New'
               }}>
                 {status === 'APPROVED' ? '418' : '•••'}
@@ -153,7 +203,7 @@ const CreditCardMock = ({ cardHolder = 'YOUR NAME', status = 'APPROVED', monthly
             </div>
           </div>
 
-          <div style={{ padding: '0 24px', marginTop: '16px', fontSize: '0.5rem', color: 'rgba(255,255,255,0.3)', lineHeight: '1.4' }}>
+          <div style={{ padding: '0 24px', marginTop: '12px', fontSize: '0.5rem', color: secondaryTextColor, lineHeight: '1.4', fontWeight: 600 }}>
             This card is mock property of Apex Bank. If found, please dispose of properly. Used solely for demonstration of Credit Eligibility Systems.
           </div>
         </div>

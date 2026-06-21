@@ -56,7 +56,7 @@ const ApplicationDetails = () => {
           description: 'We require additional documentation to complete the assessment of your profile.'
         };
       default:
-        return { color: '#ffffff', bg: 'rgba(255,255,255,0.05)', label: status, description: '' };
+        return { color: 'var(--text-primary)', bg: 'rgba(0,0,0,0.05)', label: status, description: '' };
     }
   };
 
@@ -122,11 +122,11 @@ const ApplicationDetails = () => {
               {statusInfo.description}
             </p>
 
-            <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '16px 20px', borderRadius: '10px', border: '1px dashed rgba(255,255,255,0.08)' }}>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em' }}>
+            <div style={{ background: 'rgba(0, 0, 0, 0.02)', padding: '16px 20px', borderRadius: '10px', border: '2px dashed #E2E8F0' }}>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em' }}>
                 System Decision Message
               </div>
-              <div style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: 600, marginTop: '6px', lineHeight: '1.4' }}>
+              <div style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: 700, marginTop: '6px', lineHeight: '1.4' }}>
                 "{app.decisionMessage || 'No notes left by system.'}"
               </div>
             </div>
@@ -143,6 +143,7 @@ const ApplicationDetails = () => {
                 cardHolder={app.fullName} 
                 status={app.status} 
                 monthlyIncome={app.monthlyIncome} 
+                cardNumber={app.cardNumber}
               />
             </div>
             
@@ -168,20 +169,20 @@ const ApplicationDetails = () => {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', fontSize: '0.9rem' }}>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>Full Name:</span>
-                  <div style={{ color: '#ffffff', fontWeight: 600, marginTop: '2px' }}>{app.fullName}</div>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Full Name:</span>
+                  <div style={{ color: 'var(--text-primary)', fontWeight: 700, marginTop: '2px' }}>{app.fullName}</div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>Phone:</span>
-                  <div style={{ color: '#ffffff', fontWeight: 600, marginTop: '2px' }}>{app.phoneNumber}</div>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Phone:</span>
+                  <div style={{ color: 'var(--text-primary)', fontWeight: 700, marginTop: '2px' }}>{app.phoneNumber}</div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>PAN Card:</span>
-                  <div style={{ color: '#ffffff', fontWeight: 600, marginTop: '2px', fontFamily: 'Courier New' }}>{app.pan}</div>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>PAN Card:</span>
+                  <div style={{ color: 'var(--text-primary)', fontWeight: 700, marginTop: '2px', fontFamily: 'Courier New' }}>{app.pan}</div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>Aadhaar:</span>
-                  <div style={{ color: '#ffffff', fontWeight: 600, marginTop: '2px', fontFamily: 'Courier New' }}>{app.aadhaar}</div>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Aadhaar:</span>
+                  <div style={{ color: 'var(--text-primary)', fontWeight: 700, marginTop: '2px', fontFamily: 'Courier New' }}>{app.aadhaar}</div>
                 </div>
               </div>
             </div>
@@ -195,20 +196,20 @@ const ApplicationDetails = () => {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', fontSize: '0.9rem' }}>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>Employment Type:</span>
-                  <div style={{ color: '#ffffff', fontWeight: 600, marginTop: '2px' }}>{app.employmentType}</div>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Employment Type:</span>
+                  <div style={{ color: 'var(--text-primary)', fontWeight: 700, marginTop: '2px' }}>{app.employmentType}</div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>Monthly Income:</span>
-                  <div style={{ color: '#ffffff', fontWeight: 600, marginTop: '2px' }}>₹{app.monthlyIncome.toLocaleString('en-IN')}</div>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Monthly Income:</span>
+                  <div style={{ color: 'var(--text-primary)', fontWeight: 700, marginTop: '2px' }}>₹{app.monthlyIncome.toLocaleString('en-IN')}</div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>Duration:</span>
-                  <div style={{ color: '#ffffff', fontWeight: 600, marginTop: '2px' }}>{app.employmentDurationMonths} Months</div>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Duration:</span>
+                  <div style={{ color: 'var(--text-primary)', fontWeight: 700, marginTop: '2px' }}>{app.employmentDurationMonths} Months</div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>Salary Proof:</span>
-                  <div style={{ color: app.salaryProofProvided ? 'var(--color-success)' : 'var(--color-danger)', fontWeight: 600, marginTop: '2px' }}>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Salary Proof:</span>
+                  <div style={{ color: app.salaryProofProvided ? '#047857' : '#B91C1C', fontWeight: 700, marginTop: '2px' }}>
                     {app.salaryProofProvided ? 'Verified/Submitted' : 'Not Submitted'}
                   </div>
                 </div>
@@ -224,24 +225,24 @@ const ApplicationDetails = () => {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', fontSize: '0.9rem' }}>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>CIBIL Score:</span>
-                  <div style={{ color: app.cibilScore >= 750 ? 'var(--color-success)' : app.cibilScore >= 650 ? 'var(--color-warning)' : 'var(--color-danger)', fontWeight: 700, marginTop: '2px' }}>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>CIBIL Score:</span>
+                  <div style={{ color: app.cibilScore >= 750 ? '#047857' : app.cibilScore >= 650 ? '#B45309' : '#B91C1C', fontWeight: 800, marginTop: '2px' }}>
                     {app.cibilScore}
                   </div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>Existing Debt Exposure:</span>
-                  <div style={{ color: '#ffffff', fontWeight: 600, marginTop: '2px' }}>₹{app.existingLoanExposure.toLocaleString('en-IN')}</div>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Existing Debt Exposure:</span>
+                  <div style={{ color: 'var(--text-primary)', fontWeight: 700, marginTop: '2px' }}>₹{app.existingLoanExposure.toLocaleString('en-IN')}</div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>Card Utilization:</span>
-                  <div style={{ color: app.creditCardUtilization > 80 ? 'var(--color-warning)' : '#ffffff', fontWeight: 600, marginTop: '2px' }}>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Card Utilization:</span>
+                  <div style={{ color: app.creditCardUtilization > 80 ? '#B45309' : 'var(--text-primary)', fontWeight: 700, marginTop: '2px' }}>
                     {app.creditCardUtilization}%
                   </div>
                 </div>
                 <div>
-                  <span style={{ color: 'var(--text-secondary)' }}>Debt to Income (DTI):</span>
-                  <div style={{ color: dti > 50 ? 'var(--color-warning)' : '#ffffff', fontWeight: 600, marginTop: '2px' }}>
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>Debt to Income (DTI):</span>
+                  <div style={{ color: dti > 50 ? '#B45309' : 'var(--text-primary)', fontWeight: 700, marginTop: '2px' }}>
                     {dti}%
                   </div>
                 </div>
@@ -252,8 +253,8 @@ const ApplicationDetails = () => {
 
             {/* Residency address */}
             <div>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em' }}>Address & Location</span>
-              <div style={{ fontSize: '0.9rem', color: '#ffffff', marginTop: '6px', lineHeight: '1.4' }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em' }}>Address & Location</span>
+              <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', marginTop: '6px', lineHeight: '1.4', fontWeight: 700 }}>
                 {app.address}, PIN: {app.pincode}
               </div>
             </div>

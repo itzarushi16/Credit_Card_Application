@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS credit_card_applications (
     salary_proof_provided BOOLEAN NOT NULL,
     status VARCHAR(50) NOT NULL, -- APPROVED, REJECTED, MANUAL_REVIEW, PENDING
     decision_message VARCHAR(500),
+    card_number VARCHAR(16),
     created_at DATETIME NOT NULL,
     updated_at DATETIME,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

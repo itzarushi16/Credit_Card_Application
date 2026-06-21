@@ -34,7 +34,7 @@ const ApplicationForm = () => {
       [name]: type === 'checkbox' ? checked : value
     }));
 
-    // Clear specific error on input change
+    
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }

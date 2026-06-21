@@ -23,6 +23,7 @@ public class ApplicationResponse {
     private Boolean salaryProofProvided;
     private ApplicationStatus status;
     private String decisionMessage;
+    private String cardNumber;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -33,7 +34,7 @@ public class ApplicationResponse {
                                Integer employmentDurationMonths, String employmentType, Integer cibilScore,
                                Double existingLoanExposure, Double creditCardUtilization, Double monthlyDebtObligations,
                                Boolean salaryProofProvided, ApplicationStatus status, String decisionMessage,
-                               LocalDateTime createdAt, LocalDateTime updatedAt) {
+                               String cardNumber, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.userId = userId;
         this.fullName = fullName;
@@ -53,6 +54,7 @@ public class ApplicationResponse {
         this.salaryProofProvided = salaryProofProvided;
         this.status = status;
         this.decisionMessage = decisionMessage;
+        this.cardNumber = cardNumber;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -115,6 +117,9 @@ public class ApplicationResponse {
     public String getDecisionMessage() { return decisionMessage; }
     public void setDecisionMessage(String decisionMessage) { this.decisionMessage = decisionMessage; }
 
+    public String getCardNumber() { return cardNumber; }
+    public void setCardNumber(String cardNumber) { this.cardNumber = cardNumber; }
+
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
@@ -146,6 +151,7 @@ public class ApplicationResponse {
         private Boolean salaryProofProvided;
         private ApplicationStatus status;
         private String decisionMessage;
+        private String cardNumber;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -168,6 +174,7 @@ public class ApplicationResponse {
         public ApplicationResponseBuilder salaryProofProvided(Boolean salaryProofProvided) { this.salaryProofProvided = salaryProofProvided; return this; }
         public ApplicationResponseBuilder status(ApplicationStatus status) { this.status = status; return this; }
         public ApplicationResponseBuilder decisionMessage(String decisionMessage) { this.decisionMessage = decisionMessage; return this; }
+        public ApplicationResponseBuilder cardNumber(String cardNumber) { this.cardNumber = cardNumber; return this; }
         public ApplicationResponseBuilder createdAt(LocalDateTime createdAt) { this.createdAt = createdAt; return this; }
         public ApplicationResponseBuilder updatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; return this; }
 
@@ -175,7 +182,7 @@ public class ApplicationResponse {
             return new ApplicationResponse(id, userId, fullName, email, phoneNumber, pan, aadhaar, address, pincode,
                     monthlyIncome, employmentDurationMonths, employmentType, cibilScore, existingLoanExposure,
                     creditCardUtilization, monthlyDebtObligations, salaryProofProvided, status, decisionMessage,
-                    createdAt, updatedAt);
+                    cardNumber, createdAt, updatedAt);
         }
     }
 }

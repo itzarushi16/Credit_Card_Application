@@ -67,6 +67,9 @@ public class CreditCardApplication {
     @Column(name = "decision_message", length = 500)
     private String decisionMessage;
 
+    @Column(name = "card_number", length = 20)
+    private String cardNumber;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -94,7 +97,7 @@ public class CreditCardApplication {
                                  Integer employmentDurationMonths, String employmentType, Integer cibilScore,
                                  Double existingLoanExposure, Double creditCardUtilization, Double monthlyDebtObligations,
                                  Boolean salaryProofProvided, ApplicationStatus status, String decisionMessage,
-                                 LocalDateTime createdAt, LocalDateTime updatedAt) {
+                                 String cardNumber, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.user = user;
         this.fullName = fullName;
@@ -114,6 +117,7 @@ public class CreditCardApplication {
         this.salaryProofProvided = salaryProofProvided;
         this.status = status;
         this.decisionMessage = decisionMessage;
+        this.cardNumber = cardNumber;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -176,6 +180,9 @@ public class CreditCardApplication {
     public String getDecisionMessage() { return decisionMessage; }
     public void setDecisionMessage(String decisionMessage) { this.decisionMessage = decisionMessage; }
 
+    public String getCardNumber() { return cardNumber; }
+    public void setCardNumber(String cardNumber) { this.cardNumber = cardNumber; }
+
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
@@ -207,6 +214,7 @@ public class CreditCardApplication {
         private Boolean salaryProofProvided;
         private ApplicationStatus status;
         private String decisionMessage;
+        private String cardNumber;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -229,6 +237,7 @@ public class CreditCardApplication {
         public CreditCardApplicationBuilder salaryProofProvided(Boolean salaryProofProvided) { this.salaryProofProvided = salaryProofProvided; return this; }
         public CreditCardApplicationBuilder status(ApplicationStatus status) { this.status = status; return this; }
         public CreditCardApplicationBuilder decisionMessage(String decisionMessage) { this.decisionMessage = decisionMessage; return this; }
+        public CreditCardApplicationBuilder cardNumber(String cardNumber) { this.cardNumber = cardNumber; return this; }
         public CreditCardApplicationBuilder createdAt(LocalDateTime createdAt) { this.createdAt = createdAt; return this; }
         public CreditCardApplicationBuilder updatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; return this; }
 
@@ -236,7 +245,7 @@ public class CreditCardApplication {
             return new CreditCardApplication(id, user, fullName, email, phoneNumber, pan, aadhaar, address, pincode,
                     monthlyIncome, employmentDurationMonths, employmentType, cibilScore, existingLoanExposure,
                     creditCardUtilization, monthlyDebtObligations, salaryProofProvided, status, decisionMessage,
-                    createdAt, updatedAt);
+                    cardNumber, createdAt, updatedAt);
         }
     }
 }

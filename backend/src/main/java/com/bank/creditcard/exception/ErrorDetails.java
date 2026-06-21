@@ -35,7 +35,7 @@ public class ErrorDetails {
     public Map<String, String> getValidationErrors() { return validationErrors; }
     public void setValidationErrors(Map<String, String> validationErrors) { this.validationErrors = validationErrors; }
 
-    // Builder
+
     public static ErrorDetailsBuilder builder() {
         return new ErrorDetailsBuilder();
     }

@@ -13,9 +13,9 @@ public interface ApplicationRepository extends JpaRepository<CreditCardApplicati
     List<CreditCardApplication> findByUserIdOrderByCreatedAtDesc(Long userId);
     List<CreditCardApplication> findByPanOrderByCreatedAtDesc(String pan);
     
-    // For duplicate check in last 30 days
+
     List<CreditCardApplication> findByPanAndCreatedAtAfter(String pan, LocalDateTime dateTime);
     
-    // For fraud/rate limiting check: application count in the last 5 minutes
+
     long countByUserAndCreatedAtAfter(User user, LocalDateTime dateTime);
 }
